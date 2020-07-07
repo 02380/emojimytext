@@ -4,7 +4,7 @@
 
 	let input_text = '';
 
-	$: input_text_emoji = input_text && create_new_txt('🅰🅱©∂📧🎏⛽♓ℹ🗾🎋👢Ⓜ♑⭕🅿Q®⚡🌴⛎♈📈❌✌Ⓩ')
+	$: input_text_emoji = input_text && create_new_txt('🅰🅱©Ⓓ📧🎏⛽♓ℹ🗾🎋👢Ⓜ♑⭕🅿Ⓠ®⚡🌴⛎♈📈❌✌Ⓩ')
 	$: input_text_emoji_special = input_text && create_new_specialmoji();
 	$: input_text_circled = input_text && create_new_txt('ⒶⒷⒸⒹⒺⒻⒼⒽⒾⒿⓀⓁⓂⓃⓄⓅⓆⓇⓈⓉⓊⓋⓌⓍⓎⓏ')
 	$: input_text_fullwidth = input_text && create_new_txt('ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ')
@@ -15,7 +15,9 @@
 
 
 	let create_new_specialmoji = (alef_replace) => {
-		let special_cases = [['be','🐝'],['bee','🐝'],['car','🚙']];
+		let special_cases = [['be','🐝'],['end','🔚'],['abc','🔤'],['world','🌎'],
+			['car','🚙'],['ok','🆗'],['cool','🆒'],['cl','🆑'],
+			['id','🆔'],['sos','🆘'],['atm','🏧'],['new','🆕'],['ng','🆖'],['soon','🔜'],['free','🆓']];
 		let punmoji = false, loc_text = input_text;
 		special_cases.forEach((sc) => {
 			console.log(input_text.search(sc[0]));
