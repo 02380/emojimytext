@@ -8,6 +8,29 @@ h1, h2, h3, h4, h5, h6 {
 	font-weight: 400;
 }
 
+.text {
+	display: flex;
+  align-items: center;
+	vertical-align: middle;
+}
+
+@media only screen and (min-width:600px) {
+	small {
+		display: none;
+	}
+}
+
+small {
+	text-align: right;
+	width: 100px;
+	display: inline;
+	padding-right: 16px;
+	font-size:10pt;
+}
+
+h2 {
+}
+
 body {
 	color: #333;
 	margin: 0;

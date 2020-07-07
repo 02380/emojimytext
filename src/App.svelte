@@ -1,7 +1,11 @@
 <script>
+	import {fade} from "svelte/transition"
+	import emojiAware from "emoji-aware"
+
 	let input_text = '';
 
 	$: input_text_emoji = input_text && create_new_txt('🅰🅱©∂📧🎏⛽♓ℹ🗾🎋👢Ⓜ♑⭕🅿Q®⚡🌴⛎♈📈❌✌Ⓩ')
+	$: input_text_emoji_special = input_text && create_new_specialmoji();
 	$: input_text_circled = input_text && create_new_txt('ⒶⒷⒸⒹⒺⒻⒼⒽⒾⒿⓀⓁⓂⓃⓄⓅⓆⓇⓈⓉⓊⓋⓌⓍⓎⓏ')
 	$: input_text_fullwidth = input_text && create_new_txt('ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ')
 	$: input_text_blocks = input_text && create_new_txt('🅰🅱🅲🅳🅴🅵🅶🅷🅸🅹🅺🅻🅼🅽🅾🅿🆀🆁🆂🆃🆄🆅🆆🆇🆈🆉')
@@ -9,11 +13,30 @@
 	$: input_text_backwards = input_text && create_new_txt('ɐqɔpǝɟƃɥıɾʞןɯuodbɹsʇn𐌡ʍxʎz')
 	$: input_text_cjkt = input_text && create_new_txt('ﾑ乃cd乇ｷgんﾉﾌズﾚﾶ刀oｱq尺丂ｲu√wﾒﾘ乙')
 
-	import {fade} from "svelte/transition"
-	import emojiAware from "emoji-aware"
+
+	let create_new_specialmoji = (alef_replace) => {
+		let special_cases = [['be','🐝'],['bee','🐝'],['car','🚙']];
+		let punmoji = false, loc_text = input_text;
+		special_cases.forEach((sc) => {
+			console.log(input_text.search(sc[0]));
+			if (input_text.search(sc[0]) !== -1	) {
+				loc_text = loc_text.replaceAll(sc[0],sc[1]);
+				punmoji = true;
+			}
+		});
+		if (punmoji == true) {
+			return create_new_txt_long('🅰🅱©∂📧🎏⛽♓ℹ🗾🎋👢Ⓜ♑⭕🅿Q®⚡🌴⛎♈📈❌✌Ⓩ',loc_text);
+		} else {
+			return undefined;
+		}
+	}
 
 	let create_new_txt = (alef_replace) => {
-		let loc_text = input_text.toUpperCase();
+		return create_new_txt_long(alef_replace, input_text)
+	}
+
+	let create_new_txt_long = (alef_replace, strb) => {
+		let loc_text = strb.toUpperCase();
 		let emojis = emojiAware.split(alef_replace);
 		let alef = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 		for(let i = alef.length-1; i>=0; i--) {
@@ -36,14 +59,15 @@
 <main in:fade>
 	<h1>every text type ever - by <a href="http://github.com/02380">byron</a></h1>
 	<input placeholder="start typing..." autofocus="autofocus" bind:value={input_text} type="text" name="this_doesnt_matter_but_ok">
-	<h2>{input_text}</h2>
-	<h2>{input_text_emoji}</h2>
-	<h2>{input_text_circled}</h2>
-	<h2>{input_text_fullwidth}</h2>
-	<h2>{input_text_blocks}</h2>
-	<h2>{input_text_backwards}</h2>
-	<h2>{input_text_doublestruck}</h2>
-	<h2>{input_text_cjkt}</h2>
+	{#if input_text}<div class="text"><small>Text</small><h2>{input_text}</h2></div>{/if}
+	{#if input_text_emoji}<div class="text"><small>emoji</small><h2>{input_text_emoji}</h2></div>{/if}
+	{#if input_text_emoji_special}<div class="text"><small>punemoji</small><h2>{input_text_emoji_special}</h2></div>{/if}
+	{#if input_text_circled}<div class="text"><small>circle</small><h2>{input_text_circled}</h2></div>{/if}
+	{#if input_text_fullwidth}<div class="text"><small>fullwidth</small><h2>{input_text_fullwidth}</h2></div>{/if}
+	{#if input_text_blocks}<div class="text"><small>blocks</small><h2>{input_text_blocks}</h2></div>{/if}
+	{#if input_text_backwards}<div class="text"><small>backwards</small><h2>{input_text_backwards}</h2></div>{/if}
+	{#if input_text_doublestruck}<div class="text"><small>math doublestruck</small><h2>{input_text_doublestruck}</h2></div>{/if}
+	{#if input_text_cjkt}<div class="text"><small>CJK+thai</small><h2>{input_text_cjkt}</h2></div>{/if}
 </main>
 
 <style>
