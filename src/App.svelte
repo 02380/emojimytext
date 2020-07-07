@@ -26,7 +26,7 @@
 
 <main in:fade>
 	<h1>every text type ever - by <a href="http://github.com/02380">byron</a></h1>
-	<input autofocus="autofocus" bind:value={input_text} type="text" name="this_doesnt_matter_but_ok">
+	<input placeholder="start typing..." autofocus="autofocus" bind:value={input_text} type="text" name="this_doesnt_matter_but_ok">
 	<h2>{input_text}</h2>
 	<h2>{input_text_emoji}</h2>
 	<h2>{input_text_circled}</h2>
@@ -41,7 +41,7 @@
 	main {
 		padding: 1em;
 		padding-top: 0.2rem;
-		max-width: 240px;
+		/*max-width: 240px;*/
 		margin: 0 auto;
 	}
 	@media (min-width: 640px) {
