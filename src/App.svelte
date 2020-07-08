@@ -42,9 +42,9 @@
 		let emojis = emojiAware.split(alef_replace);
 		let alef = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 		for(let i = alef.length-1; i>=0; i--) {
-			loc_text = loc_text.replaceAll(alef[i],emojis[i]);
+			loc_text = loc_text.replaceAll(alef[i],emojis[i]+"\uFE0F");
 		}
-		return loc_text;
+		return "\uFE0F"+loc_text;
 	}
 	if (!String.prototype.replaceAll) {
 	  String.prototype.replaceAll = function(find, replace) {
