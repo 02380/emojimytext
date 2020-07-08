@@ -8,7 +8,7 @@
 	$: input_text_emoji_special = input_text && create_new_specialmoji();
 	$: input_text_circled = input_text && create_new_txt('ⒶⒷⒸⒹⒺⒻⒼⒽⒾⒿⓀⓁⓂⓃⓄⓅⓆⓇⓈⓉⓊⓋⓌⓍⓎⓏ')
 	$: input_text_fullwidth = input_text && create_new_txt('ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ')
-	$: input_text_blocks = input_text && create_new_txt('🅰🅱🅲🅳🅴🅵🅶🅷🅸🅹🅺🅻🅼🅽🅾🅿🆀🆁🆂🆃🆄🆅🆆🆇🆈🆉')
+	$: input_text_blocks = input_text && create_new_txt('🅰🅱🅲🅳🅴🅵🅶🅷🅸🅹🅺🅻🅼🅽🅾🅿🆀🆁🆂🆃🆄🆅🆆🆇🆈🆉',true)
 	$: input_text_doublestruck = input_text && create_new_txt('𝔸𝔹ℂ𝔻𝔼𝔽𝔾ℍ𝕀𝕁𝕂𝕃𝕄ℕ𝕆ℙℚℝ𝕊𝕋𝕌𝕍𝕎𝕏𝕐ℤ')
 	$: input_text_backwards = input_text && create_new_txt('ɐqɔpǝɟƃɥıɾʞןɯuodbɹsʇn𐌡ʍxʎz')
 	$: input_text_cjkt = input_text && create_new_txt('ﾑ乃cd乇ｷgんﾉﾌズﾚﾶ刀oｱq尺丂ｲu√wﾒﾘ乙')
@@ -33,18 +33,19 @@
 		}
 	}
 
-	let create_new_txt = (alef_replace) => {
-		return create_new_txt_long(alef_replace, input_text)
+	let create_new_txt = (alef_replace, is_text_str = false) => {
+		return create_new_txt_long(alef_replace, input_text, is_text_str)
 	}
 
-	let create_new_txt_long = (alef_replace, strb) => {
+	let create_new_txt_long = (alef_replace, strb, is_text_str = false) => {
+		let unicode_char = is_text_str == true ? '\uFE0E' : '\uFE0F'
 		let loc_text = strb.toUpperCase();
 		let emojis = emojiAware.split(alef_replace);
 		let alef = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 		for(let i = alef.length-1; i>=0; i--) {
-			loc_text = loc_text.replaceAll(alef[i],emojis[i]+"\uFE0F");
+			loc_text = loc_text.replaceAll(alef[i],emojis[i]+unicode_char);
 		}
-		return "\uFE0F"+loc_text;
+		return loc_text;
 	}
 	if (!String.prototype.replaceAll) {
 	  String.prototype.replaceAll = function(find, replace) {
